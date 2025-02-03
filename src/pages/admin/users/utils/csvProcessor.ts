@@ -31,6 +31,14 @@ export type ProcessingResult = {
   errors: { row: number; errors: string[] }[];
 };
 
+function generateTempPassword(): string {
+  // Generate a random string of 8 characters
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from(crypto.getRandomValues(new Uint8Array(8)))
+    .map(x => chars.charAt(x % chars.length))
+    .join('');
+}
+
 async function getLevelId(levelName?: string): Promise<string | null> {
   if (!levelName) return null;
   
@@ -378,3 +386,4 @@ export async function importUsers(
 function generateTempPassword(): string {
   return Math.random().toString(36).slice(-8);
 }
+
